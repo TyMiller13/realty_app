@@ -9,4 +9,6 @@ router.get('/', auth.welcome);
 router.post('/pre-register', auth.preRegister); // get confirmation from valid email address
 router.post('/register', auth.register); // create the register endpoint
 router.post('/login', auth.login); // login 
+router.post('/forgot-password', auth.forgotPassword);// forgot password
+router.post('/access-account', auth.accessAccount) // account access
 export default router;
