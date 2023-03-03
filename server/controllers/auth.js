@@ -151,15 +151,13 @@ export const login = async (req, res) => {
 
   export const accessAccount = async (req, res) => {
     try {
-      const { resetCode } = jwt.verify(req.body.resetCode, config.JWT_SECRET);
-      const user = await User.findOneAndUpdate({ resetCode }, { resetCode: "" });
-  
-      if (!user) {
-        return res.json({ error: "Invalid reset code." });
-      }
-  
+        const { resetCode } = jwt.verify(req.body.resetCode, config.JWT_SECRET);
+
+        const user = await User.findOneAndUpdate({ resetCode }, { resetCode: "" })
+              
       const token = jwt.sign({ _id: user._id }, config.JWT_SECRET, {expiresIn: "1h",});
       const refreshToken = jwt.sign({ _id: user._id }, config.JWT_SECRET, {expiresIn: "7d",});
+      
       user.password = undefined;
       user.resetCode = undefined;
   
@@ -169,8 +167,8 @@ export const login = async (req, res) => {
         refreshToken,
       });
     } catch (err) {
-      console.log(err);
-      res.json({ error: "Something went wrong. Try again." });             
+        console.log(err);
+        res.json({ error: "Something went wrong. Try again." });       
     }
   };
   
