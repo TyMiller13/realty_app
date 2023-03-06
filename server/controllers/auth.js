@@ -152,15 +152,16 @@ export const login = async (req, res) => {
 
   export const accessAccount = async (req, res) => {
     try {
-        const { resetCode } = jwt.verify(req.body.token, config.JWT_SECRET);
+        const { resetCode } = jwt.verify(req.body.resetCode, config.JWT_SECRET);
 
         const user = await User.findOneAndUpdate({ resetCode }, { resetCode: "" });
-      
+        console.log(user, resetCode);
+
         tokenAndUserResponse(req, res, user);
       
     } catch (err) {
         console.log(err);
-        res.json({ error: "Something went wrong. Try again." });       
+        res.json({ error: "Token is invalid or expired. Try again." });       
     }
   };
   
@@ -187,5 +188,17 @@ export const login = async (req, res) => {
     } catch (err) {
         console.log(err);
         return res.status(403).json({ error: "Unauthorized" });
+    }
+  }
+
+  export const publicProfile = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId)
+        user.password = undefined;
+        user.resetCode = undefined;
+        res.json(user);
+    }  catch (err) {
+        console.log(err);
+        return res.status(403).json({ error: err });
     }
   }
