@@ -189,11 +189,11 @@ export const login = async (req, res) => {
         console.log(err);
         return res.status(403).json({ error: "Unauthorized" });
     }
-  }
+  };
 
   export const publicProfile = async (req, res) => {
     try {
-        const user = await User.findById(req.params.userId)
+        const user = await User.findById(req.params.userId);
         user.password = undefined;
         user.resetCode = undefined;
         res.json(user);
@@ -201,4 +201,46 @@ export const login = async (req, res) => {
         console.log(err);
         return res.status(403).json({ error: err });
     }
-  }
+  };
+
+  export const updatePassword = async (req, res) => {
+    try {
+        const { password } = req.body;
+
+        if(!password){
+            return res.json({ error: "Password is required" });
+        }
+
+        if(password && password?.length < 6) {
+            return res.json ({ error: "Password entered needs to be atleast 6 characters long. Try again." });
+        }
+
+        const user = await User.findById(req.user._id);
+        const hashedPassword = await hashPassword(password);
+
+        await User.findByIdAndUpdate(user._id, {
+            password: hashedPassword,
+        });
+        res.json({ ok: True });
+        
+    } catch (err) {
+        console.log(err);
+        return res.status(403).json({ error: "Unauthorized" });
+    }
+  };
+
+  export const updateProfile = async (req, res) => {
+    try {
+        const user = await User.findByIdAndUpdate(req.user._id , { ...req.body, }, { new: true });
+        user.password = undefined;
+        user.resetCode = undefined;
+        res.json(user);
+    } catch (err) {
+        console.log(err);
+        if(err.codeName === "DuplicateKey"){
+            return res.status(403).json({ error: "Username is already taken" });
+        } else {
+            return res.status(403).json({ error: "Unauthorized" });
+        }
+    }
+  };
