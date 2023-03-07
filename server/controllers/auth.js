@@ -124,12 +124,13 @@ export const login = async (req, res) => {
         const { email } = req.body;
         const user = await User.findOne({ email });
         if (!user){
-            return res.json({ error: "Could not find user with that email" })
+            return res.json({ error: "Could not find user with that email address" })
         } else {
             const resetCode = nanoid();
-            user.resetCode = resetCode;
             const token = jwt.sign({ resetCode }, config.JWT_SECRET, { expiresIn: "1h",});
-
+            
+            user.resetCode = resetCode;
+            user.save()
             config.AWS_SES.sendEmail(emailTemplate(email, 
             `
             <p> Please click the link below to access your account</p>
@@ -150,21 +151,56 @@ export const login = async (req, res) => {
     }
   }
 
-  export const accessAccount = async (req, res) => {
-    try {
-        const { resetCode } = jwt.verify(req.body.resetCode, config.JWT_SECRET);
+//   export const accessAccount = async (req, res) => {
+//     try {
+//         const { resetCode } = jwt.verify(req.body.resetCode, config.JWT_SECRET);
 
-        const user = await User.findOneAndUpdate({ resetCode }, { resetCode: "" });
-        console.log(user, resetCode);
+//         console.log(user, resetCode);
+//         const user = await User.findOneAndUpdate({ resetCode }, { resetCode: "" });
 
-        tokenAndUserResponse(req, res, user);
-      
-    } catch (err) {
-        console.log(err);
-        res.json({ error: "Token is invalid or expired. Try again." });       
-    }
-  };
+//        tokenAndUserResponse(req, res, user);
+
+//     } catch (err) {
+//         console.log(err);
+//         res.json({ error: "Token is invalid or expired. Try again." });       
+//     }
+//   };
   
+    export const accessAccount = async (req, res) => {
+        try {
+        // verify token and check expiry
+        const { resetCode } = jwt.verify(req.body.resetCode, config.JWT_SECRET);
+    
+        const user = await User.findOneAndUpdate(
+            { resetCode },
+            { resetCode: "" }
+        );
+    
+        console.log("user", user, resetCode);
+        // return;
+    
+        // generate token
+        const token = jwt.sign({ _id: user._id }, config.JWT_SECRET, {
+            expiresIn: "1d",
+        });
+        // generate refresh token
+        const refreshToken = jwt.sign({ _id: user._id }, config.JWT_SECRET, {
+            expiresIn: "30d",
+        });
+    
+        user.password = undefined;
+        user.resetCode = undefined;
+        return res.json({
+            token,
+            refreshToken,
+            user,
+        });
+        } catch (err) {
+        console.log(err);
+        res.json({ error: "Expired or invalid token. Try again." });
+        }
+    };
+
   export const refreshToken = async (req, res) => {
     try {
        const {_id} = jwt.verify(req.headers.refresh_token, config.JWT_SECRET);
