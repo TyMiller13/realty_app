@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import axios from 'axios';
-import { API } from '../config';
+// import { API } from '../config';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
@@ -23,7 +23,7 @@ export default function Register() {
                 toast.error(data.error);
                 setLoading(false);
             } else {
-                toast.success("Please check your email to activate accoun");
+                toast.success("Please check your email and click the link to activate your account");
                 setLoading(false);
                 navigate("/")
             }
