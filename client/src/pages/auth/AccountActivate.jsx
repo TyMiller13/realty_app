@@ -22,6 +22,9 @@ export default function AccountActivate() {
             if(data?.error){
                 toast.error(data.error);
             } else { 
+                // save data in local storage
+                localStorage.setItem('auth', JSON.stringify(data));
+                // save data in context
                 setAuth(data)
                 toast.success("You have been successfully logged in, Welcome to Homey!")
                 navigate("/");
