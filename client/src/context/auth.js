@@ -1,4 +1,7 @@
 import { useState, createContext, useContext } from "react";
+import axios from "axios";
+import { API } from "../config";
+
 
 const AuthContext = createContext();
 
@@ -8,6 +11,9 @@ const AuthProvider = ({children}) => {
         token: "",
         refreshToken: "",
     });
+
+//configure axios, sets axios default to API of server
+axios.defaults.baseURL = API;
 
     return (
         <AuthContext.Provider value={[auth, setAuth]}>
