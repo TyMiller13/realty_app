@@ -9,9 +9,9 @@ import AccountActivate from "./pages/auth/AccountActivate";
 function App() {
   return (
     <BrowserRouter>
-    <MainNav />
-    <Toaster />
         <AuthProvider>
+            <MainNav />
+            <Toaster />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />

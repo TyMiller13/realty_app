@@ -1,10 +1,13 @@
 import React from 'react';
 import { useState } from 'react';
 import axios from 'axios';
-// import { API } from '../config';
+
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/auth';
+import { Link } from 'react-router-dom';
+
+
 
 export default function Register() {
     //context
@@ -54,6 +57,7 @@ export default function Register() {
                         <button disabled={loading} className="btn btn-primary col-12 mb-4"> 
                         {loading ? "Logging in..." : "Login" }</button>
                     </form>
+                    <Link to="/auth/forgot-password">Forgot Password</Link>
                 </div>
             </div>
         </div>
