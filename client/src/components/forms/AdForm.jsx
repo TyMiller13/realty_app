@@ -10,20 +10,21 @@ export default function AdForm({action, type}) {
     const [ad, setAd] = useState({
         photos: [],
         uploading: false,
-        price: "",
         address: "",
+        title: "",
+        description: "",
+        lotsize: "",
+        price: "",
         bedrooms: "",
         bathrooms: "",
         parking: "",
-        lotsize: "",
         type: "",
-        title: "",
-        description: "",
         loading: false,
     })
   return (
     <>
-        <div className="mb-3 form-control">
+        <div className="container border border-primary">
+        <div className="my-4">
             <GooglePlacesAutocomplete 
             apiKey={GOOGLE_API_KEY} 
             apiOptions="us" 
@@ -34,6 +35,9 @@ export default function AdForm({action, type}) {
             }} 
             />
         </div>
+        <input type="text" className='form-control mb-3' placeholder='Enter Title' value={ad.title} onChange={(e) => setAd({...ad, title: e.target.value})} />
+        <textarea className='form-control mb-3' placeholder='Enter Description' value={ad.description} onChange={(e) => setAd({...ad, description: e.target.value})} />
+        <input type="text" className='form-control mb-3' placeholder='Enter lot size (e.g. "2000 sqft") ' value={ad.lotsize} onChange={(e) => setAd({...ad, lotsize: e.target.value})} />
 
         <CurrencyInput 
         placeholder='Enter price' 
@@ -45,12 +49,9 @@ export default function AdForm({action, type}) {
         <input type="number" min="0" className='form-control mb-3' placeholder='How many bedrooms?' value={ad.bedrooms} onChange={(e) => setAd({...ad, bedrooms: e.target.value})} />
         <input type="number" min="0" className='form-control mb-3' placeholder='How many bathrooms?' value={ad.bathrooms} onChange={(e) => setAd({...ad, bathrooms: e.target.value})} />
         <input type="number" min="0" className='form-control mb-3' placeholder='How many spots for parking?' value={ad.parking} onChange={(e) => setAd({...ad, parking: e.target.value})} />
-        <input type="text" className='form-control mb-3' placeholder='Enter lot size' value={ad.lotsize} onChange={(e) => setAd({...ad, lotsize: e.target.value})} />
-        <input type="text" className='form-control mb-3' placeholder='Enter Title' value={ad.title} onChange={(e) => setAd({...ad, title: e.target.value})} />
-        <textarea className='form-control mb-3' placeholder='Enter Description' value={ad.description} onChange={(e) => setAd({...ad, description: e.target.value})} />
         
-        <button className='btn btn-primary btn-lg' >Submit</button>
-
+        <button className='btn btn-primary btn-lg my-3' >Submit</button>
+        </div>
         <pre> {JSON.stringify(ad, null, 4)} </pre>
     </>
   )
