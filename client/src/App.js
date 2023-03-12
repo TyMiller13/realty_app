@@ -11,6 +11,10 @@ import AccessAccount from "./pages/auth/AccessAccount";
 import Dashboard from "./pages/user/Dashboard";
 import CreateAd from "./pages/user/Ad/CreateAd";
 import PrivateRoute from "./components/routes/PrivateRoute";
+import HouseForSale from "./pages/user/Ad/HouseForSale";
+import HouseForRent from "./pages/user/Ad/HouseForRent";
+import LandForSale from "./pages/user/Ad/LandForSale";
+import LandForRent from "./pages/user/Ad/LandForRent";
 
 function App() {
   return (
@@ -19,7 +23,7 @@ function App() {
             <MainNav />
             <Toaster />
             <Routes>
-                
+
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
@@ -31,6 +35,10 @@ function App() {
                 <Route path="/" element={<PrivateRoute/>}>
                     <Route path="dashboard" element={<Dashboard />} />
                     <Route path="ad/create" element={<CreateAd />} />
+                    <Route path="ad/create/sell/House" element={<HouseForSale />} />
+                    <Route path="ad/create/rent/House" element={<HouseForRent />} />
+                    <Route path="ad/create/sell/Land" element={<LandForSale />} />
+                    <Route path="ad/create/rent/Land" element={<LandForRent />} />
                 </Route>
 
             </Routes>
