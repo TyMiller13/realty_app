@@ -3,7 +3,7 @@ import { useState } from 'react';
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { GOOGLE_API_KEY } from '../../config';
 import CurrencyInput from "react-currency-input-field";
-
+import ImageUpload from './ImageUpload';
 
 export default function AdForm({action, type}) {
     //state
@@ -23,7 +23,8 @@ export default function AdForm({action, type}) {
     })
   return (
     <>
-        <div className="container border border-primary">
+        <div className="container border border-primary my-5">
+        <ImageUpload ad={ad} setAd={setAd} />
         <div className="my-4">
             <GooglePlacesAutocomplete 
             apiKey={GOOGLE_API_KEY} 
@@ -50,7 +51,7 @@ export default function AdForm({action, type}) {
         <input type="number" min="0" className='form-control mb-3' placeholder='How many bathrooms?' value={ad.bathrooms} onChange={(e) => setAd({...ad, bathrooms: e.target.value})} />
         <input type="number" min="0" className='form-control mb-3' placeholder='How many spots for parking?' value={ad.parking} onChange={(e) => setAd({...ad, parking: e.target.value})} />
         
-        <button className='btn btn-primary btn-lg my-3' >Submit</button>
+        <button className='btn btn-success btn-lg my-3' >Submit</button>
         </div>
         <pre> {JSON.stringify(ad, null, 4)} </pre>
     </>
