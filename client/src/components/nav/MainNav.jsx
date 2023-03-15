@@ -26,7 +26,7 @@ export default function MainNav() {
     }
 
   return (
-    <nav className="nav d-flex justify-content-between p-2 lead">
+    <nav className="nav d-flex justify-content-between bg-primary p-2 lead">
         <NavLink className="nav-link" aria-current="page" to="/">Home</NavLink>
         <a className="nav-link pointer" onClick={handlePostAdClick}> Post ad </a>
         {

@@ -1,6 +1,11 @@
-.active {
+.active, .nav-link {
     color: white;
-    background-color: #2196f3;
+    background-color: #17a2b8;
+}
+
+#side-nav {
+    background-color: #17a2b8;
+    font-weight: bold;
 }
 
 .pointer {
