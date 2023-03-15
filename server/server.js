@@ -4,6 +4,9 @@ import cors from "cors";
 import mongoose from "mongoose";
 import { MONGO_URL } from "./config.js";
 import authRoutes from "./routes/auth.js";
+import adRoutes from "./routes/ad.js";
+
+
 
 const app = express();
 
@@ -15,11 +18,12 @@ mongoose.connect(MONGO_URL)
 .catch((err) => console.log(err));
 
 // middleware
-app.use(express.json());
+app.use(express.json({limit: "10mb"}));
 app.use(morgan('dev'));
 app.use(cors());
 
 //routes middleware
 app.use('/api', authRoutes);
+app.use('/api', adRoutes);
 
 app.listen(8000, () => console.log("server is running on port 8000"));
