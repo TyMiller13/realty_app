@@ -30,8 +30,8 @@ export default function CreateAd() {
                 
                 {sell && (
                     <div className="my-2">
-                        <button onClick={() => navigate('/ad/create/sell/House')} className='btn btn-info border p-5 col-6'>House</button>
-                        <button onClick={() => navigate('/ad/create/sell/Land')} className='btn btn-info border p-5 col-6'>Land</button>
+                        <button onClick={() => navigate('/ad/create/sell/House')} className='btn btn-info border p-5 col-6'><span className='h2'> House </span></button>
+                        <button onClick={() => navigate('/ad/create/sell/Land')} className='btn btn-info border p-5 col-6'><span className='h2'> Land </span></button>
                     </div>
                 )}
             </div>
@@ -39,8 +39,8 @@ export default function CreateAd() {
                 <button onClick={handleRent} className='btn btn-primary btn-lg col-12 p-5'><span className='h2'> Rent </span></button>
                 {rent && (
                     <div className="my-2">
-                        <button onClick={() => navigate('/ad/create/rent/House')} className='btn btn-info border p-5 col-6'>House</button>
-                        <button onClick={() => navigate('/ad/create/rent/Land')} className='btn btn-info border p-5 col-6'>Land</button>
+                        <button onClick={() => navigate('/ad/create/rent/House')} className='btn btn-info border p-5 col-6'><span className='h2'> House </span></button>
+                        <button onClick={() => navigate('/ad/create/rent/Land')} className='btn btn-info border p-5 col-6'><span className='h2'> Land </span></button>
                     </div>
                 )}
             </div>

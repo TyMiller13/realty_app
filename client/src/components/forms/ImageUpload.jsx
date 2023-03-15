@@ -1,6 +1,7 @@
 import React from 'react';
 import Resizer from "react-image-file-resizer";
 import axios from "axios";
+import {Avatar} from "antd"
 
 
 
@@ -50,20 +51,32 @@ export default function ImageUpload({ad,setAd}) {
         }
     }
     
-    const handleDelete = async () => {
+    const handleDelete = async (file) => {
+        const answer = window.confirm("Are you sure you want to delete image?");
+        if(!answer) return;
         try {
-            setAd({...ad, uploading: true});
+            const { data } = await axios.post('/remove-image', file);
+            if(data?.ok){
+                setAd((prev) => ({
+                    ...prev,
+                    photos: prev.photos.filter((p) => p.Key !== file.Key),
+                    uploading: false,
+                }));
+            }
         } catch (err) {
             console.log(err);
             setAd({...ad, uploading: false});
         }
-    }
+    };
+    
   return (
     <>
         <label className="btn btn-primary my-4">
-            Upload Images
-        <input type="file" accept="image/*" multiple onChange={handleUpload} hidden/>
+            {ad.uploading ? "Processing..." : "Upload Photos"}
+        <input onChange={handleUpload} type="file" accept="image/*" multiple hidden/>
         </label>
+        {ad.photos?.map((file) => (<Avatar src={file?.Location} shape="square" size={46} className="mx-1 pointer" onClick={() => handleDelete(file)}/>))}
+        
     </>
-  )
+  );
 }

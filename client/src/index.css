@@ -1,6 +1,7 @@
 .active, .nav-link {
     color: white;
     background-color: #17a2b8;
+    font-weight: bold;
 }
 
 #side-nav {
