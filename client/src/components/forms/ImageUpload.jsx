@@ -14,8 +14,9 @@ export default function ImageUpload({ad,setAd}) {
             files = [...files];
             if(files?.length){
                 // console.log(files);
-                setAd({...ad, uploading: true});
+                setAd({ ...ad, uploading: true });
                 files.map(file => {
+                    //upload image
                     new Promise((resolve) => {
                         Resizer.imageFileResizer(
                             file,
@@ -26,7 +27,7 @@ export default function ImageUpload({ad,setAd}) {
                             0,
                             async (uri) => {
                               try {
-                                const data = await axios.post('/upload-image',{
+                                const { data } = await axios.post('/upload-image',{
                                     image: uri,
                                 });
                                 setAd((prev) => ({
@@ -52,31 +53,40 @@ export default function ImageUpload({ad,setAd}) {
     }
     
     const handleDelete = async (file) => {
-        const answer = window.confirm("Are you sure you want to delete image?");
-        if(!answer) return;
+        const answer = window.confirm("Delete image?");
+        if (!answer) return;
+        setAd({ ...ad, uploading: true });
         try {
-            const { data } = await axios.post('/remove-image', file);
-            if(data?.ok){
-                setAd((prev) => ({
-                    ...prev,
-                    photos: prev.photos.filter((p) => p.Key !== file.Key),
-                    uploading: false,
-                }));
-            }
+          const { data } = await axios.post('/remove-image', file);
+          if (data?.ok) {
+            setAd((prev) => ({
+              ...prev,
+              photos: prev.photos.filter((p) => p.Key !== file.Key),
+              uploading: false,
+            }));
+          }
         } catch (err) {
-            console.log(err);
-            setAd({...ad, uploading: false});
+          console.log(err);
+          setAd({ ...ad, uploading: false });
         }
     };
-    
+
   return (
     <>
         <label className="btn btn-primary my-4">
             {ad.uploading ? "Processing..." : "Upload Photos"}
         <input onChange={handleUpload} type="file" accept="image/*" multiple hidden/>
         </label>
-        {ad.photos?.map((file) => (<Avatar src={file?.Location} shape="square" size={46} className="mx-1 pointer" onClick={() => handleDelete(file)}/>))}
-        
+        {ad.photos?.map((file, index) => (
+            <Avatar 
+                key={index} 
+                src={file?.Location} 
+                shape="square" 
+                size={46} 
+                className="mx-1 pointer" 
+                onClick={() => handleDelete(file)} 
+            />
+        ))};
     </>
   );
 }
