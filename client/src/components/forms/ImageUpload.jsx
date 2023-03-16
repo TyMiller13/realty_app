@@ -6,6 +6,7 @@ import {Avatar} from "antd"
 
 
 
+
 export default function ImageUpload({ad,setAd}) {
 
     const handleUpload = async (e) => {
@@ -54,20 +55,18 @@ export default function ImageUpload({ad,setAd}) {
     
     const handleDelete = async (file) => {
         const answer = window.confirm("Delete image?");
-        if (!answer) return;
+        if(!answer) return;
         setAd({ ...ad, uploading: true });
         try {
-          const { data } = await axios.post('/remove-image', file);
-          if (data?.ok) {
-            setAd((prev) => ({
-              ...prev,
-              photos: prev.photos.filter((p) => p.Key !== file.Key),
-              uploading: false,
-            }));
-          }
+            const { data } = await axios.post('/remove-image', file);
+            if (data?.ok) {
+                setAd((prev) => ({ ...prev, photos: prev.photos.filter((photo) => photo.Key !== file.Key),
+                uploading: false,
+                }));
+            }
         } catch (err) {
-          console.log(err);
-          setAd({ ...ad, uploading: false });
+            console.log(err);
+            setAd({ ...ad, uploading: false });
         }
     };
 
@@ -86,7 +85,7 @@ export default function ImageUpload({ad,setAd}) {
                 className="mx-1 pointer" 
                 onClick={() => handleDelete(file)} 
             />
-        ))};
+        ))}
     </>
   );
 }
