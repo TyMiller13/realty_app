@@ -52,3 +52,12 @@ export const removeImage = async (req, res) => {
         console.log(err);
     }
 };
+
+export const create = async (req, res) => {
+    try {
+        console.log(req.body);
+    } catch (err) {
+        res.json({ error: "Something went wrong. Try again." });
+        console.log(err);
+    }
+}

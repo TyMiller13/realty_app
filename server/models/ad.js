@@ -25,8 +25,8 @@ const schema = new Schema ({
     postedBy: {type: ObjectId, ref: "User"},
     sold: {type: Boolean, default: false},
     googleMap: {},
-    type: {type: String, default: "Other"},
-    action: {type: String, default: "Sell"},
+    type: {type: String, default: "Other"}, //House, Land, Apartment, Commercial
+    action: {type: String, default: "Sell"}, //Sell or Rent
     views: {type: Number, default: 0}
 }, { timestamps: true }
 );
