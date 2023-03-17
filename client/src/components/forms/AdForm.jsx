@@ -4,6 +4,10 @@ import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { GOOGLE_API_KEY } from '../../config';
 import CurrencyInput from "react-currency-input-field";
 import ImageUpload from './ImageUpload';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+
 
 export default function AdForm({action, type}) {
     //state
@@ -18,9 +22,30 @@ export default function AdForm({action, type}) {
         bedrooms: "",
         bathrooms: "",
         parking: "",
-        type: "",
         loading: false,
+        type,
+        action,
     })
+
+    const handleClick = async () => {
+        try {
+            setAd({ ...ad, loading: true });
+            const {data} = await axios.post('/ad', ad);
+            console.log("ad create response => ", data);
+            if(data?.error){
+                toast.error(data.error);
+                setAd({ ...ad, loading: false });
+            } else {
+                toast.success("Ad was created successfully");
+                setAd({ ...ad, loading: false});
+                //navigate("/dashboard")
+            }
+        } catch (err) {
+            console.log(err);
+            setAd({ ...ad, loading: false});
+        }
+    }
+
   return (
     <>
         <div className="container border border-primary my-5">
@@ -51,7 +76,7 @@ export default function AdForm({action, type}) {
         <input type="number" min="0" className='form-control mb-3' placeholder='How many bathrooms?' value={ad.bathrooms} onChange={(e) => setAd({...ad, bathrooms: e.target.value})} />
         <input type="number" min="0" className='form-control mb-3' placeholder='How many spots for parking?' value={ad.parking} onChange={(e) => setAd({...ad, parking: e.target.value})} />
         
-        <button className='btn btn-success btn-lg my-3' >Submit</button>
+        <button onClick={handleClick} className='btn btn-success btn-lg my-3' >Submit</button>
         </div>
         <pre> {JSON.stringify(ad, null, 4)} </pre>
     </>
