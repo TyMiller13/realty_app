@@ -6,19 +6,19 @@ const schema = new Schema ({
     title: {type: String, maxLength: 255},
     desription: {},
     price: {type: Number, maxLength: 255},
-    lotsize: {type: String, maxLength: 255},
+    lotsize: {type: String},
     bedrooms: Number,
     bathrooms: Number,
     parking: {type: String, maxLength: 255},
     location: {
         type: {
             type: String,
-            enum: ["point"],
+            enum: ["Point"],
             default: "Point",  
         },
         coordinates: {
             type: [Number],
-            default: [43.547302, -96.728333],
+            default: [-96.728333, 43.547302], //longitude & Latitude
         }
     },
     slug: {type: String, lowercase: true, unique: true},
