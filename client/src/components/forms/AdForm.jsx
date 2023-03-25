@@ -26,6 +26,9 @@ export default function AdForm({action, type}) {
         type,
         action,
     })
+    //hooks 
+
+    const navigate = useNavigate();
 
     const handleClick = async () => {
         try {
@@ -38,7 +41,7 @@ export default function AdForm({action, type}) {
             } else {
                 toast.success("Ad was created successfully");
                 setAd({ ...ad, loading: false});
-                //navigate("/dashboard")
+                navigate("/dashboard")
             }
         } catch (err) {
             console.log(err);
@@ -76,9 +79,9 @@ export default function AdForm({action, type}) {
         <input type="number" min="0" className='form-control mb-3' placeholder='How many bathrooms?' value={ad.bathrooms} onChange={(e) => setAd({...ad, bathrooms: e.target.value})} />
         <input type="number" min="0" className='form-control mb-3' placeholder='How many spots for parking?' value={ad.parking} onChange={(e) => setAd({...ad, parking: e.target.value})} />
         
-        <button onClick={handleClick} className='btn btn-success btn-lg my-3' >Submit</button>
+        <button onClick={handleClick} className={`btn btn-success btn-lg my-3 ${ad.loading ? "disabled" : ""}`} > {ad.loading ? "Saving..." : "Submit"}</button>
         </div>
-        <pre> {JSON.stringify(ad, null, 4)} </pre>
+        {/* <pre> {JSON.stringify(ad, null, 4)} </pre> */}
     </>
   )
 }
