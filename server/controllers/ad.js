@@ -83,6 +83,7 @@ export const create = async (req, res) => {
             location: {type: 'Point', coordinates: [geo?.[0]?.longitude, geo?.[0]?.latitude],
         },
         googleMap: geo,
+        slug: slugify(`${type}-${address}-${price}-${nanoid(6)}`)
         })
         ad.save();
 
