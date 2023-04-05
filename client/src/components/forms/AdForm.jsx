@@ -75,10 +75,14 @@ export default function AdForm({action, type}) {
         onValueChange={(value) => setAd({...ad, price: value})}
         />
 
-        <input type="number" min="0" className='form-control mb-3' placeholder='How many bedrooms?' value={ad.bedrooms} onChange={(e) => setAd({...ad, bedrooms: e.target.value})} />
-        <input type="number" min="0" className='form-control mb-3' placeholder='How many bathrooms?' value={ad.bathrooms} onChange={(e) => setAd({...ad, bathrooms: e.target.value})} />
-        <input type="number" min="0" className='form-control mb-3' placeholder='How many spots for parking?' value={ad.parking} onChange={(e) => setAd({...ad, parking: e.target.value})} />
-        
+        {type === "House" ? (
+            <>
+                <input type="number" min="0" className='form-control mb-3' placeholder='How many bedrooms?' value={ad.bedrooms} onChange={(e) => setAd({...ad, bedrooms: e.target.value})} />
+                <input type="number" min="0" className='form-control mb-3' placeholder='How many bathrooms?' value={ad.bathrooms} onChange={(e) => setAd({...ad, bathrooms: e.target.value})} />
+                <input type="number" min="0" className='form-control mb-3' placeholder='How many spots for parking?' value={ad.parking} onChange={(e) => setAd({...ad, parking: e.target.value})} />
+            </>
+        ) : ("")}
+
         <button onClick={handleClick} className={`btn btn-success btn-lg my-3 ${ad.loading ? "disabled" : ""}`} > {ad.loading ? "Saving..." : "Submit"}</button>
         </div>
         {/* <pre> {JSON.stringify(ad, null, 4)} </pre> */}
