@@ -2,6 +2,8 @@ import React from 'react'
 import { useAuth } from '../context/auth'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import AdCard from '../components/cards/AdCard';
+
 export default function Home() {
     //context
     const [auth, SetAuth] = useAuth();
@@ -24,8 +26,21 @@ export default function Home() {
     }
   return (
     <div>
-        <h1 className="display-1 bg-info text-white p-1">Welcome To Homey</h1>
-        <pre>{JSON.stringify({adsForSell, adsForRent}, null, 4)}</pre>
+        <h1 className="display-1 bg-info text-white p-1"> For Sale </h1>
+        {/* <pre>{JSON.stringify({adsForSell, adsForRent}, null, 4)}</pre> */}
+        <div className="container">
+            <div className="row">
+                {adsForSell?.map(ad => (<AdCard ad={ad} key={ad._id}/>))}
+            </div>
+        </div>
+
+        <h1 className="display-1 bg-info text-white p-1"> For Rent </h1>
+        {/* <pre>{JSON.stringify({adsForSell, adsForRent}, null, 4)}</pre> */}
+        <div className="container">
+            <div className="row">
+                {adsForRent?.map(ad => (<AdCard ad={ad} key={ad._id}/>))}
+            </div>
+        </div>
     </div>
   )
 }
