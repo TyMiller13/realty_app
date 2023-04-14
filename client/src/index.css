@@ -15,6 +15,6 @@
 }
 
 .hoverable:hover {
-    transform: scale(1.01);
+    transform: scale(1.2);
     box-shadow: 0.4rem 0.4rem 1rem rgba(0, 0, 0, 0.15) !important;
 }
