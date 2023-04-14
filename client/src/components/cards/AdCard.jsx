@@ -1,4 +1,10 @@
-import React from 'react'
+import React from 'react';
+import {IoBedOutline} from 'react-icons/io5';
+import {TbBath} from 'react-icons/tb';
+import {BiArea} from 'react-icons/bi';
+
+
+
 
 export default function AdCard({ad}) {
   return (
@@ -13,7 +19,11 @@ export default function AdCard({ad}) {
                 <div className="d-flex justify-content-between">
                     <h3>{ad?.price}</h3>
                 </div>
-                <p>{ad?.address}</p>
+                <p className='card-text d-flex justify-content-between'>
+                    {ad?.bedrooms ? (<span> <IoBedOutline/> {ad?.bedrooms} </span>) : '' }
+                    {ad?.bathrooms ? (<span> <TbBath/> {ad?.bathrooms} </span>) : '' }
+                    {ad?.lotsize ? (<span> <BiArea/> {ad?.lotsize} </span>) : '' }
+                </p>
             </div>
         </div>
     </div>
