@@ -13,7 +13,7 @@ export default function AdCard({ad}) {
                 <div className="d-flex justify-content-between">
                     <h3>{ad?.price}</h3>
                 </div>
-                <p>Ad features</p>
+                <p>{ad?.address}</p>
             </div>
         </div>
     </div>
