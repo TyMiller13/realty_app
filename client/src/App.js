@@ -15,6 +15,7 @@ import HouseForSale from "./pages/user/Ad/HouseForSale";
 import HouseForRent from "./pages/user/Ad/HouseForRent";
 import LandForSale from "./pages/user/Ad/LandForSale";
 import LandForRent from "./pages/user/Ad/LandForRent";
+import AdView from "./pages/AdView";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
                     <Route path="ad/create/sell/Land" element={<LandForSale />} />
                     <Route path="ad/create/rent/Land" element={<LandForRent />} />
                 </Route>
+                <Route path="/ad/:slug" element={<AdView />}/>
 
             </Routes>
         </AuthProvider>    
