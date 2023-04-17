@@ -8,5 +8,7 @@ import { requireLogin } from "../middleware/auth.js";
 router.post('/upload-image', requireLogin, ad.uploadImage);
 router.post('/remove-image', requireLogin, ad.removeImage);
 router.post('/ad', requireLogin, ad.create);
-router.get('/ads', ad.ads )
+router.get('/ads', ad.ads );
+router.get('/ad/:slug', ad.read);
+
 export default router;

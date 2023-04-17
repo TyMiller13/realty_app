@@ -1,3 +1,4 @@
+
 import * as config from "../config.js";
 import { nanoid } from "nanoid";
 import slugify from "slugify";
@@ -124,3 +125,22 @@ export const ads = async (req, res) => {
         console.log(err);
     }
 }
+
+
+
+export const read = async (req, res) => {
+    try {
+        const ad = await Ad.findOne({ slug: req.params.slug }).populate("postedBy", "name username email phone company photo.location");
+        //related ads
+        const related = await Ad.find({
+            _id: { $ne: ad._id },
+            action: ad.action,
+            type: ad.type,
+            address: { $regex: ad.googleMap[0].city, $options: "i", }
+        }).limit(3).select('-photos.Key -photos.key -photos.ETag -photos.Bucket -googlemap')
+        res.json({ ad, related})
+    } catch (err) {
+        console.log(err)
+    }
+}
+
