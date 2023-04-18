@@ -134,11 +134,11 @@ export const read = async (req, res) => {
         //related ads
         const related = await Ad.find({
             _id: { $ne: ad._id },
-            action: ad.action,
-            type: ad.type,
+            action: ad?.action,
+            type: ad?.type,
             address: { $regex: ad.googleMap[0].city, $options: "i", }
         }).limit(3).select('-photos.Key -photos.key -photos.ETag -photos.Bucket -googlemap')
-        res.json({ ad, related})
+        res.json({ ad, related })
     } catch (err) {
         console.log(err)
     }
