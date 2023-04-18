@@ -7,7 +7,7 @@ export default function AdView() {
     //state
     const [ad, setAd] = useState({});
     const [related, setRelated] = useState([]);
-    //hooks
+    // hooks
     const params = useParams();
     useEffect(() => {
         if(params?.slug) fetchAd();
@@ -16,16 +16,14 @@ export default function AdView() {
     const fetchAd = async () => {
         try {
             const data = await axios.get(`/ad/${params.slug}`);
-            setAd(data.ad);
-            setRelated(data.related);
+            setAd(data);
+            setRelated(data?.related);
             
         } catch (err) {
             console.log(err);
         }
-    }
-  return 
-    <>
-    <pre>{JSON.stringify({ad, related}, null, 4)}</pre>
-    </>
+    };
+    return <><pre>{JSON.stringify({ad, related}, null, 4)}</pre></>;
+
   
 }
